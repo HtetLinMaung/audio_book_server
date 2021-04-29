@@ -1,8 +1,12 @@
 const { Schema, model } = require("mongoose");
 
-const contentSchema = new Schema(
+const currencySchema = new Schema(
   {
-    text: {
+    currencyName: {
+      type: String,
+      required: true,
+    },
+    currencyCode: {
       type: String,
       required: true,
     },
@@ -16,4 +20,4 @@ const contentSchema = new Schema(
   }
 );
 
-module.exports = model("contents", contentSchema);
+module.exports = model("currencies", currencySchema);

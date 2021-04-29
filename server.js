@@ -2,24 +2,13 @@ require("dotenv").config();
 
 const cors = require("cors");
 const express = require("express");
-const { ApolloServer, gql } = require("apollo-server-express");
+const { ApolloServer } = require("apollo-server-express");
 const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 3000;
 
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
-
-const resolvers = {
-  Query: {
-    hello: () => "Hello World!",
-  },
-};
-
-const server = new ApolloServer({ typeDefs, resolvers });
+const config = require("./graphql/index");
+const server = new ApolloServer(config);
 
 const app = express();
 server.applyMiddleware({ app });

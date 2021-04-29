@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const bookSchema = new Schema(
   {
-    title: {
+    bookName: {
       type: String,
       required: true,
     },
@@ -25,11 +25,29 @@ const bookSchema = new Schema(
       enum: ["audiobook", "ebook"],
       required: true,
     },
-    contents: [
+    chapters: [
       {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: "contents",
+        chapterTitle: {
+          type: String,
+          required: true,
+        },
+        pages: [
+          {
+            pageNo: {
+              type: Number,
+              required: true,
+            },
+            duration: {
+              type: Number,
+              default: 0,
+            },
+            content: {
+              type: Schema.Types.ObjectId,
+              required: true,
+              ref: "contents",
+            },
+          },
+        ],
       },
     ],
     audioUrl: {
@@ -40,7 +58,7 @@ const bookSchema = new Schema(
       type: Number,
       required: true,
     },
-    currencyId: {
+    currency: {
       type: Schema.Types.ObjectId,
       ref: "currencies",
       required: true,
