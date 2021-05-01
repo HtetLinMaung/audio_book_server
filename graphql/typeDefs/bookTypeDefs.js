@@ -13,6 +13,13 @@ module.exports = gql`
     book: Book
   }
 
+  type BookQueryResponse implements MutationResponse {
+    code: String!
+    success: Boolean!
+    message: String!
+    books: [Book]
+  }
+
   type Page {
     pageNo: Int!
     duration: Float!
@@ -63,7 +70,7 @@ module.exports = gql`
   }
 
   extend type Query {
-    books: [Book]
+    books: BookQueryResponse!
   }
 
   extend type Mutation {

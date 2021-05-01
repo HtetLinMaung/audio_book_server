@@ -10,6 +10,15 @@ module.exports = {
       if (res.genres) {
         return "GenreQueryResponse";
       }
+      if (res.currencies) {
+        return "CurrencyQueryResponse";
+      }
+      if (res.books) {
+        return "BookQueryResponse";
+      }
+      if (res.currency) {
+        return "CurrencyResponse";
+      }
     },
   },
 };

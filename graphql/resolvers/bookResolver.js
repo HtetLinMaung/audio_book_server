@@ -1,18 +1,34 @@
 const Book = require("../../models/Book");
 const Content = require("../../models/Content");
-const { InternalError, CreatedResponse } = require("../constants");
+const {
+  InternalError,
+  CreatedResponse,
+  QueryResponse,
+} = require("../constants");
 const { createDto } = require("../utils/response-utils");
 
 module.exports = {
   Query: {
     books: async () => {
-      return await Book.find();
+      try {
+        const books = await Book.find({ deletedAt: null })
+          .populate("chapters.pages.content")
+          .populate("currency")
+          .populate("genres");
+
+        return QueryResponse({
+          books: books.map((v) => createDto(v)),
+        });
+      } catch (err) {
+        console.log(err.message);
+        return InternalError;
+      }
     },
   },
   Mutation: {
     addBook: async (_, args) => {
       try {
-        for (const chapter of args.chapters) {
+        for (const chapter of args.bookInput.chapters) {
           for (const page of chapter.pages) {
             const content = new Content({
               text: page.content,
@@ -23,13 +39,14 @@ module.exports = {
           }
         }
 
-        const book = new Book({ ...args });
+        const book = new Book({ ...args.bookInput });
         await book.save();
 
         return CreatedResponse({
           book: createDto(book),
         });
       } catch (err) {
+        console.log(err.message);
         return InternalError;
       }
     },
