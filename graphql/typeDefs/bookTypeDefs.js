@@ -17,6 +17,12 @@ module.exports = gql`
     code: String!
     success: Boolean!
     message: String!
+    total: Int!
+    perPage: Int!
+    currentPage: Int!
+    lastPage: Int!
+    from: Int!
+    to: Int!
     books: [Book]
   }
 
@@ -58,6 +64,7 @@ module.exports = gql`
   }
 
   input BookInput {
+    id: String
     bookName: String!
     authorName: String!
     coverImage: String!
@@ -70,10 +77,13 @@ module.exports = gql`
   }
 
   extend type Query {
-    books: BookQueryResponse!
+    books(page: Int!, perPage: Int!): BookQueryResponse!
+    book(id: String!): BookResponse!
   }
 
   extend type Mutation {
-    addBook(bookInput: BookInput): BookResponse!
+    addBook(bookInput: BookInput!): BookResponse!
+    updateBook(bookInput: BookInput!): BookResponse!
+    deleteBook(id: String!): BookResponse!
   }
 `;
