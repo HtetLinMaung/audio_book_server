@@ -5,8 +5,9 @@ const {
   QueryResponse,
   CreatedResponse,
   NoContent,
+  UpdatedResponse,
 } = require("../constants");
-const { createDto } = require("../utils/response-utils");
+const { createDto } = require("../../utils/response-utils");
 
 module.exports = {
   Query: {
@@ -58,8 +59,7 @@ module.exports = {
           return NotFound;
         }
 
-        return CreatedResponse({
-          code: "200",
+        return UpdatedResponse({
           genre: createDto(genre),
         });
       } catch (err) {

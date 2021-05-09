@@ -6,8 +6,9 @@ const {
   QueryResponse,
   NotFound,
   NoContent,
+  UpdatedResponse,
 } = require("../constants");
-const { createDto } = require("../utils/response-utils");
+const { createDto } = require("../../utils/response-utils");
 
 module.exports = {
   Query: {
@@ -111,8 +112,7 @@ module.exports = {
 
         await book.save();
 
-        return CreatedResponse({
-          code: "200",
+        return UpdatedResponse({
           book: createDto(book),
         });
       } catch (err) {

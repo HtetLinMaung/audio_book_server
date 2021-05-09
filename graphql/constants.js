@@ -27,6 +27,15 @@ exports.NoContent = {
   success: true,
 };
 
+exports.UpdatedResponse = (payload) => {
+  return {
+    code: 200,
+    success: true,
+    message: "updated successful",
+    ...payload,
+  };
+};
+
 exports.CreatedResponse = (payload) => {
   return {
     code: "201",

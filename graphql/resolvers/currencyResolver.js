@@ -5,8 +5,9 @@ const {
   NotFound,
   CreatedResponse,
   NoContent,
+  UpdatedResponse,
 } = require("../constants");
-const { createDto } = require("../utils/response-utils");
+const { createDto } = require("../../utils/response-utils");
 
 module.exports = {
   Query: {
@@ -60,7 +61,7 @@ module.exports = {
         currency.currencyCode = args.currencyCode;
         await currency.save();
 
-        return CreatedResponse({ code: "200", currency: createDto(currency) });
+        return UpdatedResponse({ currency: createDto(currency) });
       } catch (err) {
         return InternalError;
       }
